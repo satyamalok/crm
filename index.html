@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lead Assignment CRM</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <style>
         /* Global styles */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --danger-color: #f72585;
+            --call-button: #3db63d;      /* Green for call button */
+            --whatsapp-button: #25D366;  /* WhatsApp brand color */
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
         * {
             box-sizing: border-box;
             margin: 0;
@@ -72,46 +88,146 @@
         }
         
         .main-container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 1rem;
         }
         
-        .section-tabs {
-            display: flex;
-            overflow-x: auto;
+        .crm-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background-color: var(--light-gray);
+            margin: 2rem 0;
+        }
+        
+        /* Common utility classes */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.25);
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-success {
+            color: white;
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #3db8dc;
+            border-color: #3db8dc;
+        }
+        
+        .btn-call {
+            color: white;
+            background-color: var(--call-button);
+            border-color: var(--call-button);
+        }
+        
+        .btn-call:hover {
+            background-color: #339633;
+            border-color: #339633;
+        }
+        
+        .btn-whatsapp {
+            color: white;
+            background-color: var(--whatsapp-button);
+            border-color: var(--whatsapp-button);
+        }
+        
+        .btn-whatsapp:hover {
+            background-color: #20b858;
+            border-color: #20b858;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
             margin-bottom: 1rem;
         }
         
-        .section-tab {
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
             padding: 1rem;
-            cursor: pointer;
-            white-space: nowrap;
-            color: #6c757d;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
         }
         
-        .section-tab.active {
-            color: #4361ee;
-            border-bottom: 2px solid #4361ee;
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
             font-weight: 500;
         }
         
-        .section-tab:hover:not(.active) {
-            color: #4361ee;
-            background-color: rgba(67, 97, 238, 0.05);
+        .card-body {
+            padding: 1.5rem;
         }
         
-        .crm-section {
-            display: none;
-        }
-        
-        .crm-section.active {
-            display: block;
+        .section-title {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
         }
         
         @media (max-width: 768px) {
@@ -119,9 +235,12 @@
                 font-size: 1rem;
             }
             
-            .section-tab {
-                padding: 0.75rem;
-                font-size: 0.9rem;
+            .main-container {
+                padding: 0.5rem;
+            }
+            
+            .card-header h2 {
+                font-size: 1.25rem;
             }
         }
     </style>
@@ -135,192 +254,48 @@
                 <div class="agent-display">
                     <span class="agent-code-display"></span> | <span class="agent-name-display"></span>
                 </div>
-                <button id="navLogoutBtn" class="logout-btn">Logout</button>
+                <button id="navLogoutBtn" class="logout-btn" style="display: none;">Logout</button>
             </div>
         </div>
     </nav>
     
     <!-- Main Container -->
     <div class="main-container">
-        <!-- Section Tabs (only visible when logged in) -->
-        <div id="sectionTabs" class="section-tabs" style="display: none;">
-            <div class="section-tab active" data-section="lead-management">Lead Management</div>
-            <div class="section-tab" data-section="not-my-lead">Not My Lead</div>
-            <div class="section-tab" data-section="my-client-details">My Client Details</div>
-            <div class="section-tab" data-section="check-individual-lead">Check Individual Lead</div>
-        </div>
-        
-        <!-- CRM Sections -->
-        <div id="agentSelectionSection" class="crm-section active">
+        <!-- Agent Selection Section -->
+        <div id="agentSelectionSection" class="crm-section">
             <!-- Agent Selection Component will be inserted here -->
-            
+
             <!-- Agent Selection Component -->
-<div class="crm-container agent-selection-container">
-    <div class="crm-card">
-        <div class="crm-card-header">
-            <h2>Agent Login</h2>
+<div class="card agent-selection-container">
+    <div class="card-header">
+        <h2>Agent Login</h2>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label for="agentCode">Select Agent Code:</label>
+            <select id="agentCode" class="form-control">
+                <option value="" disabled selected>Select your agent code</option>
+                <option value="Agent 1">Agent 1</option>
+                <option value="Agent 2">Agent 2</option>
+                <option value="Agent 3">Agent 3</option>
+                <option value="Agent 4">Agent 4</option>
+                <option value="Agent 5">Agent 5</option>
+                <option value="Agent 6">Agent 6</option>
+                <option value="Agent 7">Agent 7</option>
+                <option value="Agent 8">Agent 8</option>
+                <option value="Agent 9">Agent 9</option>
+                <option value="Agent 10">Agent 10</option>
+                <option value="Agent 11">Agent 11</option>
+                <option value="Agent 12">Agent 12</option>
+            </select>
         </div>
-        <div class="crm-card-body">
-            <div class="form-group">
-                <label for="agentCode">Select Agent Code:</label>
-                <select id="agentCode" class="form-control">
-                    <option value="" disabled selected>Select your agent code</option>
-                    <option value="Agent 1">Agent 1</option>
-                    <option value="Agent 2">Agent 2</option>
-                    <option value="Agent 3">Agent 3</option>
-                    <option value="Agent 4">Agent 4</option>
-                    <option value="Agent 5">Agent 5</option>
-                    <option value="Agent 6">Agent 6</option>
-                    <option value="Agent 7">Agent 7</option>
-                    <option value="Agent 8">Agent 8</option>
-                    <option value="Agent 9">Agent 9</option>
-                    <option value="Agent 10">Agent 10</option>
-                    <option value="Agent 11">Agent 11</option>
-                    <option value="Agent 12">Agent 12</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="agentName">Enter Your Name:</label>
-                <input type="text" id="agentName" class="form-control" placeholder="Enter your name">
-            </div>
-            <button id="loginButton" class="btn btn-primary btn-block">Continue to Lead Management</button>
+        <div class="form-group">
+            <label for="agentName">Enter Your Name:</label>
+            <input type="text" id="agentName" class="form-control" placeholder="Enter your name">
         </div>
+        <button id="loginButton" class="btn btn-primary btn-block">Continue to Lead Management</button>
     </div>
 </div>
-
-<style>
-:root {
-    --primary-color: #4361ee;
-    --secondary-color: #3f37c9;
-    --accent-color: #4895ef;
-    --success-color: #4cc9f0;
-    --danger-color: #f72585;
-    --warning-color: #f8961e;
-    --light-color: #f8f9fa;
-    --dark-color: #212529;
-    --gray-color: #6c757d;
-    --light-gray: #e9ecef;
-    --border-radius: 8px;
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
-}
-
-.crm-container {
-    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 1rem;
-    color: var(--dark-color);
-}
-
-.agent-selection-container {
-    max-width: 500px;
-    margin: 2rem auto;
-}
-
-.crm-card {
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-    margin-bottom: 1rem;
-}
-
-.crm-card-header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 1rem;
-    text-align: center;
-}
-
-.crm-card-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 500;
-}
-
-.crm-card-body {
-    padding: 1.5rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--dark-color);
-}
-
-.form-control {
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border: 1px solid var(--light-gray);
-    border-radius: var(--border-radius);
-    background-color: white;
-    transition: var(--transition);
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.25);
-}
-
-.btn {
-    display: inline-block;
-    font-weight: 500;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    cursor: pointer;
-}
-
-.btn-primary {
-    color: white;
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
-}
-
-.btn-block {
-    display: block;
-    width: 100%;
-}
-
-@media (max-width: 576px) {
-    .agent-selection-container {
-        margin: 1rem auto;
-    }
-    
-    .crm-card-header h2 {
-        font-size: 1.25rem;
-    }
-    
-    .crm-card-body {
-        padding: 1rem;
-    }
-    
-    .form-control, .btn {
-        font-size: 0.9rem;
-        padding: 0.6rem;
-    }
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -358,177 +333,96 @@ document.addEventListener('DOMContentLoaded', function() {
         const agentNumber = agentCode.replace('Agent ', '');
         localStorage.setItem('agentNumber', agentNumber);
         
-        // Set agent name for display in other sections
-        const agentNameDisplay = document.querySelectorAll('.agent-name-display');
-        agentNameDisplay.forEach(element => {
-            element.textContent = agentName;
-        });
-        
-        // Set agent code for display in other sections
-        const agentCodeDisplay = document.querySelectorAll('.agent-code-display');
-        agentCodeDisplay.forEach(element => {
-            element.textContent = agentCode;
-        });
-        
-        // Hide this section and show the lead management section
-        document.querySelector('.agent-selection-container').style.display = 'none';
-        
-        // Show the lead management container (will be implemented next)
-        const leadManagementContainer = document.querySelector('.lead-management-container');
-        if (leadManagementContainer) {
-            leadManagementContainer.style.display = 'block';
-        } else {
-            console.log('Lead management container not found');
-        }
-        
-        // Event for other parts of the app to know login is complete
+        // Dispatch the agentLoggedIn event
         document.dispatchEvent(new CustomEvent('agentLoggedIn', {
             detail: { agentCode, agentName, agentNumber }
         }));
     });
-    
-    // Clear localStorage on logout (will be used in other sections)
-    window.logoutAgent = function() {
-        localStorage.removeItem('agentCode');
-        localStorage.removeItem('agentName');
-        localStorage.removeItem('agentNumber');
-        
-        // Reload the page to reset the app state
-        window.location.reload();
-    };
 });
 </script>
         </div>
         
-        <div id="leadManagementSection" class="crm-section">
+        <!-- Lead Management Section - Only visible after login -->
+        <div id="leadManagementSection" class="crm-section" style="display: none;">
             <!-- Lead Management Component will be inserted here -->
-      
-<!-- Lead Management Component (Complete) -->
-<div class="crm-container lead-management-container" style="display: none;">
-    <div class="crm-card">
-        <div class="crm-card-header">
-            <h2>Lead Management</h2>
-            <div class="agent-info">
-                <p><span class="agent-code-display"></span> | <span class="agent-name-display"></span></p>
-                <button id="logoutButton" class="btn btn-sm btn-outline">Logout</button>
+
+<!-- Lead Management Component -->
+<div class="card lead-management-container">
+    <div class="card-header">
+        <h2>Lead Management</h2>
+    </div>
+    <div class="card-body">
+        <button id="getLeadButton" class="btn btn-primary btn-block">Get New Lead</button>
+        
+        <div id="leadDetailsContainer" class="lead-details-container" style="display: none;">
+            <div class="lead-loading" id="leadLoading">
+                <div class="spinner"></div>
+                <p>Loading lead information...</p>
             </div>
-        </div>
-        <div class="crm-card-body">
-            <button id="getLeadButton" class="btn btn-primary btn-block">Get New Lead</button>
             
-            <div id="leadDetailsContainer" class="lead-details-container" style="display: none;">
-                <div class="lead-loading" id="leadLoading">
-                    <div class="spinner"></div>
-                    <p>Loading lead information...</p>
+            <div id="leadCardContainer" class="lead-card-container">
+                <!-- Lead cards will be dynamically inserted here -->
+            </div>
+            
+            <div class="lead-action-container">
+                <div class="lead-action-buttons">
+                    <a id="callButton" href="#" class="btn btn-call btn-block">Call</a>
+                    <a id="whatsappButton" href="#" class="btn btn-whatsapp btn-block">WhatsApp</a>
                 </div>
                 
-                <div id="leadCardContainer" class="lead-card-container">
-                    <!-- Lead cards will be dynamically inserted here -->
+                <div class="form-group">
+                    <label for="leadNotes">Notes:</label>
+                    <textarea id="leadNotes" class="form-control" rows="3" placeholder="Add notes about this lead..."></textarea>
                 </div>
                 
-                <div class="lead-action-container">
-                    <div class="lead-action-buttons">
-                        <a id="callButton" href="#" class="btn btn-success">
-                            <i class="fas fa-phone"></i> Call
-                        </a>
-                        <a id="whatsappButton" href="#" class="btn btn-success">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="leadNotes">Notes:</label>
-                        <textarea id="leadNotes" class="form-control" rows="3" placeholder="Add notes about this lead..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="leadStage">Disposition Stage:</label>
-                        <select id="leadStage" class="form-control">
-                            <option value="" disabled selected>Select disposition</option>
-                            <option value="No Response">No Response</option>
-                            <option value="Not Interested">Not Interested</option>
-                            <option value="App Pending">App Pending</option>
-                            <option value="App Done">App Done</option>
-                            <option value="Call Later">Call Later</option>
-                            <option value="Trial Enrolled">Trial Enrolled</option>
-                            <option value="Trial Attended">Trial Attended</option>
-                            <option value="Paid">Paid</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Call Later date picker (hidden by default) -->
-                    <div id="callLaterDateContainer" class="form-group" style="display: none;">
-                        <label for="callLaterDate">Select Call Back Date:</label>
-                        <input type="date" id="callLaterDate" class="form-control">
-                    </div>
-                    
-                    <!-- Trial Attended duration picker (hidden by default) -->
-                    <div id="trialDurationContainer" class="form-group" style="display: none;">
-                        <label>Select Trial Duration:</label>
-                        <div class="duration-picker">
-                            <div class="duration-field">
-                                <input type="number" id="durationHours" class="form-control" min="0" max="23" value="0">
-                                <label>Hours</label>
-                            </div>
-                            <div class="duration-field">
-                                <input type="number" id="durationMinutes" class="form-control" min="0" max="59" value="0">
-                                <label>Minutes</label>
-                            </div>
-                            <div class="duration-field">
-                                <input type="number" id="durationSeconds" class="form-control" min="0" max="59" value="0">
-                                <label>Seconds</label>
-                            </div>
+                <div class="form-group">
+                    <label for="leadStage">Disposition Stage:</label>
+                    <select id="leadStage" class="form-control">
+                        <option value="" disabled selected>Select disposition</option>
+                        <option value="No Response">No Response</option>
+                        <option value="Not Interested">Not Interested</option>
+                        <option value="App Pending">App Pending</option>
+                        <option value="App Done">App Done</option>
+                        <option value="Call Later">Call Later</option>
+                        <option value="Trial Enrolled">Trial Enrolled</option>
+                        <option value="Trial Attended">Trial Attended</option>
+                        <option value="Paid">Paid</option>
+                    </select>
+                </div>
+                
+                <!-- Call Later date picker (hidden by default) -->
+                <div id="callLaterDateContainer" class="form-group" style="display: none;">
+                    <label for="callLaterDate">Select Call Back Date:</label>
+                    <input type="date" id="callLaterDate" class="form-control">
+                </div>
+                
+                <!-- Trial Attended duration picker (hidden by default) -->
+                <div id="trialDurationContainer" class="form-group" style="display: none;">
+                    <label>Select Trial Duration:</label>
+                    <div class="duration-picker">
+                        <div class="duration-field">
+                            <input type="number" id="durationHours" class="form-control" min="0" max="23" value="0">
+                            <label>Hours</label>
+                        </div>
+                        <div class="duration-field">
+                            <input type="number" id="durationMinutes" class="form-control" min="0" max="59" value="0">
+                            <label>Minutes</label>
+                        </div>
+                        <div class="duration-field">
+                            <input type="number" id="durationSeconds" class="form-control" min="0" max="59" value="0">
+                            <label>Seconds</label>
                         </div>
                     </div>
-                    
-                    <button id="submitLeadButton" class="btn btn-primary btn-block">Submit</button>
                 </div>
+                
+                <button id="submitLeadButton" class="btn btn-primary btn-block">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-/* Extending the existing styles */
-.lead-management-container {
-    max-width: 800px;
-}
-
-.agent-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-    border-radius: var(--border-radius);
-}
-
-.btn-outline {
-    color: white;
-    background-color: transparent;
-    border: 1px solid white;
-}
-
-.btn-outline:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.btn-success {
-    color: white;
-    background-color: var(--success-color);
-    border-color: var(--success-color);
-}
-
-.btn-success:hover {
-    background-color: #3db8dc;
-    border-color: #3db8dc;
-}
-
+/* Lead Management specific styles */
 .lead-details-container {
     margin-top: 1.5rem;
 }
@@ -581,11 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
     font-weight: 600;
     color: var(--dark-color);
     margin: 0;
-}
-
-.lead-card-date {
-    color: var(--gray-color);
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 .lead-card-content {
@@ -610,6 +500,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .lead-action-buttons .btn {
     flex: 1;
+    font-weight: bold;
+    padding: 0.75rem 0;
+    font-size: 1.1rem;
 }
 
 .duration-picker {
@@ -651,6 +544,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // API Token
     const API_TOKEN = 'UqtPUnEsD3OQeHwlwb7IC4BFpCxG6AY3J4evDXSd';
     
+    // Webhook URLs for No Response and Not Interested
+    const WEBHOOKS = {
+        'no_response': 'https://flow.tsblive.in/webhook/e463bcac-0a06-4611-95f2-c001fc9585fb',
+        'not_interested': 'https://flow.tsblive.in/webhook/1a89cda4-a800-4a29-8689-27b2ed6963d8'
+    };
+    
     // Table IDs
     const TABLE_IDS = {
         'main': 'mxrl7syu0qe3xu3',
@@ -665,37 +564,8 @@ document.addEventListener('DOMContentLoaded', function() {
         'Agent 9': 'm2e1omymw9h0juu',
         'Agent 10': 'm72etgmfw9wkdj2',
         'Agent 11': 'mxpub6h9ypwkuku',
-        'Agent 12': 'mdbped83zgd7w37',
-        // Add your actual IDs for these tables
-        'noResponse': 'no_response_table_id',
-        'notInterested': 'not_interested_table_id'
+        'Agent 12': 'mdbped83zgd7w37'
     };
-    
-    // n8n Webhook URLs - Replace with your actual webhook URLs
-    const WEBHOOKS = {
-        'no_response': 'https://your-n8n-instance.com/webhook/no-response',
-        'not_interested': 'https://your-n8n-instance.com/webhook/not-interested'
-    };
-    
-    // View IDs (from your provided API calls)
-    const VIEW_IDS = {
-        'main': 'vw1w37kpbvbibe8p',
-        'Agent 1': 'vw6qsy9bhjjmp2uj',
-        'Agent 2': 'vwkbmwz2s27sfmaf',
-        'Agent 3': 'vwinp2ry3tsgs05v',
-        'Agent 4': 'vw1pfyodq1rue5qa',
-        'Agent 5': 'vwm662zy0mgsa6sz',
-        'Agent 6': 'vwg9aurks8a990r4',
-        'Agent 7': 'vwd1mneqgdxgxsyp',
-        'Agent 8': 'vwgnatfcc29lnwxe',
-        'Agent 9': 'vw7svg5hmw7ynq5t',
-        'Agent 10': 'vwy47pqclq52v8o0',
-        'Agent 11': 'vwfv3a57j5pe6d66',
-        'Agent 12': 'vw3n15cpn8oazt71'
-    };
-    
-    // Global variables
-    let currentLead = null;
     
     // DOM Elements
     const getLeadButton = document.getElementById('getLeadButton');
@@ -713,53 +583,67 @@ document.addEventListener('DOMContentLoaded', function() {
     const durationMinutes = document.getElementById('durationMinutes');
     const durationSeconds = document.getElementById('durationSeconds');
     const submitLeadButton = document.getElementById('submitLeadButton');
-    const logoutButton = document.getElementById('logoutButton');
+    
+    // Current lead tracking
+    let currentLead = null;
+    let processingSubmission = false;
     
     // Set today as min date for call later
     const today = new Date().toISOString().split('T')[0];
     callLaterDate.min = today;
     
-    // Display agent info from localStorage
-    function displayAgentInfo() {
-        const agentCode = localStorage.getItem('agentCode');
-        const agentName = localStorage.getItem('agentName');
-        
-        if (agentCode && agentName) {
-            document.querySelectorAll('.agent-code-display').forEach(el => {
-                el.textContent = agentCode;
-            });
-            
-            document.querySelectorAll('.agent-name-display').forEach(el => {
-                el.textContent = agentName;
-            });
-        }
-    }
-    
     // Initialize the component
     function initLeadManagement() {
-        displayAgentInfo();
-        
-        // Check if agent is logged in
-        const agentCode = localStorage.getItem('agentCode');
-        const agentName = localStorage.getItem('agentName');
-        
-        if (!agentCode || !agentName) {
-            // If not logged in, make sure this section is hidden
-            document.querySelector('.lead-management-container').style.display = 'none';
-            return;
+        // Check if there's a saved lead
+        const savedLead = localStorage.getItem('currentLead');
+        if (savedLead) {
+            try {
+                currentLead = JSON.parse(savedLead);
+                displaySavedLead();
+            } catch (e) {
+                console.error('Error parsing saved lead:', e);
+                localStorage.removeItem('currentLead');
+            }
         }
-        
-        // If logged in, show this section
-        document.querySelector('.lead-management-container').style.display = 'block';
     }
     
-    // Event listener for logout button
-    logoutButton.addEventListener('click', function() {
-        window.logoutAgent();
-    });
+    // Display a saved lead from localStorage
+    function displaySavedLead() {
+        if (!currentLead || !currentLead.Phone) return;
+        
+        // Show lead details
+        leadDetailsContainer.style.display = 'block';
+        leadLoading.style.display = 'none';
+        
+        // Create the lead card
+        const card = document.createElement('div');
+        card.className = 'lead-card';
+        card.innerHTML = `
+            <div class="lead-card-header">
+                <h3 class="lead-card-title">${currentLead.Source || 'Unknown Source'}</h3>
+            </div>
+            <div class="lead-card-content">
+                <p><span class="lead-card-label">Phone:</span> ${currentLead.Phone}</p>
+            </div>
+        `;
+        
+        // Clear and add the card
+        leadCardContainer.innerHTML = '';
+        leadCardContainer.appendChild(card);
+        
+        // Setup action buttons
+        setupActionButtons(currentLead.Phone);
+    }
     
     // Event listener for get lead button
     getLeadButton.addEventListener('click', function() {
+        // If already processing a lead, confirm before fetching a new one
+        if (currentLead) {
+            if (!confirm('You already have an active lead. Are you sure you want to get a new lead?')) {
+                return;
+            }
+        }
+        
         getNewLead();
     });
     
@@ -798,6 +682,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Prevent double submission
+        if (processingSubmission) {
+            return;
+        }
+        
         const selectedStage = leadStage.value;
         const notes = leadNotes.value;
         
@@ -817,6 +706,11 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Please select a call back date');
             return;
         }
+        
+        // Set processing flag
+        processingSubmission = true;
+        submitLeadButton.disabled = true;
+        submitLeadButton.textContent = 'Processing...';
         
         // Process lead based on disposition stage
         processLead(selectedStage, notes);
@@ -866,21 +760,15 @@ document.addEventListener('DOMContentLoaded', function() {
             currentLead = data.list[0];
             const leadPhone = currentLead.Phone;
             
-            // Notify other components about the new current lead
-            document.dispatchEvent(new CustomEvent('currentLeadUpdated', { 
-                detail: { 
-                    Phone: leadPhone,
-                    Source: currentLead.Source || '',
-                    Id: currentLead.Id
-                } 
-            }));
+            // Save lead to localStorage to prevent loss on refresh
+            localStorage.setItem('currentLead', JSON.stringify(currentLead));
             
-            // 2. Update the lead with agent name
+            // 2. Update the lead with agent name in the main table
             const agentName = localStorage.getItem('agentName');
             await updateLeadAgent(currentLead.Id, agentCode.toLowerCase().replace(' ', ''));
             
-            // 3. Get all lead history with this phone number
-            await getLeadHistory(leadPhone);
+            // Display the lead card
+            displayLeadCard(currentLead);
             
         } catch (error) {
             console.error('Error getting lead:', error);
@@ -923,77 +811,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Get lead history by phone number
-    async function getLeadHistory(phone) {
-        try {
-            const response = await fetch(`https://nocodb.tsblive.in/api/v2/tables/mxrl7syu0qe3xu3/records?where=(Phone,eq,${phone})&sort=-Id`, {
-                method: 'GET',
-                headers: {
-                    'xc-token': API_TOKEN
-                }
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Failed to fetch lead history: ${response.statusText}`);
-            }
-            
-            const data = await response.json();
-            
-            // Hide loading
-            leadLoading.style.display = 'none';
-            
-            // Display lead cards
-            displayLeadCards(data.list, phone);
-            
-        } catch (error) {
-            console.error('Error getting lead history:', error);
-            leadLoading.style.display = 'none';
+    // Display lead card
+    function displayLeadCard(lead) {
+        if (!lead || !lead.Phone) {
             leadCardContainer.innerHTML = `
                 <div class="lead-card">
                     <div class="lead-card-content">
-                        <p>Error getting lead history: ${error.message}</p>
-                    </div>
-                </div>
-            `;
-        }
-    }
-    
-    // Display lead cards from history
-    function displayLeadCards(leads, phone) {
-        if (!leads || leads.length === 0) {
-            leadCardContainer.innerHTML = `
-                <div class="lead-card">
-                    <div class="lead-card-content">
-                        <p>No lead history found.</p>
+                        <p>No lead data available.</p>
                     </div>
                 </div>
             `;
             return;
         }
         
-        // Clear card container
+        // Hide loading
+        leadLoading.style.display = 'none';
+        
+        // Create the lead card - note we don't show date/time to the agent
+        const card = document.createElement('div');
+        card.className = 'lead-card';
+        card.innerHTML = `
+            <div class="lead-card-header">
+                <h3 class="lead-card-title">${lead.Source || 'Unknown Source'}</h3>
+            </div>
+            <div class="lead-card-content">
+                <p><span class="lead-card-label">Phone:</span> ${lead.Phone}</p>
+            </div>
+        `;
+        
+        // Clear and add the card
         leadCardContainer.innerHTML = '';
+        leadCardContainer.appendChild(card);
         
-        // Add each lead as a card
-        leads.forEach(lead => {
-            const card = document.createElement('div');
-            card.className = 'lead-card';
-            card.innerHTML = `
-                <div class="lead-card-header">
-                    <h3 class="lead-card-title">${lead.Source || 'Unknown Source'}</h3>
-                    <span class="lead-card-date">${lead.Date || ''} ${lead.Time || ''}</span>
-                </div>
-                <div class="lead-card-content">
-                    <p><span class="lead-card-label">Phone:</span> ${lead.Phone || phone}</p>
-                    ${lead.Agent && lead.Agent !== 'new' ? `<p><span class="lead-card-label">Agent:</span> ${lead.Agent}</p>` : ''}
-                </div>
-            `;
-            
-            leadCardContainer.appendChild(card);
-        });
-        
-        // Setup call and whatsapp buttons
-        setupActionButtons(phone);
+        // Setup action buttons
+        setupActionButtons(lead.Phone);
     }
     
     // Setup action buttons for call and whatsapp
@@ -1011,6 +862,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function processLead(stage, notes) {
         if (!currentLead || !currentLead.Phone) {
             alert('Invalid lead data');
+            resetProcessingState();
             return;
         }
         
@@ -1028,33 +880,29 @@ document.addEventListener('DOMContentLoaded', function() {
             // Process based on stage
             switch(stage) {
                 case 'No Response':
-                    // Add to No Response table
-                    await addToNoResponseTable(phone, agentCode);
-                    
-                    // Send to n8n webhook
-                    await sendToWebhook('no_response', phone, agentCode);
+                    // Send to n8n webhook for No Response
+                    await sendToWebhook('no_response', phone, agentCode, currentLead.Source || '', notes);
                     break;
                     
                 case 'Not Interested':
                     // Check for notes
                     if (!notes || notes.trim() === '') {
                         alert('Notes are required for Not Interested status');
+                        resetProcessingState();
                         leadLoading.style.display = 'none';
                         leadCardContainer.style.display = 'block';
                         return;
                     }
                     
-                    // Add to Not Interested table
-                    await addToNotInterestedTable(phone, agentCode, notes);
-                    
-                    // Send to n8n webhook
-                    await sendToWebhook('not_interested', phone, agentCode, notes);
+                    // Send to n8n webhook for Not Interested
+                    await sendToWebhook('not_interested', phone, agentCode, currentLead.Source || '', notes);
                     break;
                     
                 case 'Call Later':
                     const callbackDate = callLaterDate.value;
                     if (!callbackDate) {
                         alert('Please select a call back date');
+                        resetProcessingState();
                         leadLoading.style.display = 'none';
                         leadCardContainer.style.display = 'block';
                         return;
@@ -1082,91 +930,36 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
             }
             
-            // Reset the form and get a new lead
+            // Reset form and clear current lead
             resetLeadForm();
-            getNewLead();
             
-            // Notify other components that the current lead has been processed
-            document.dispatchEvent(new CustomEvent('currentLeadProcessed', { 
-                detail: { success: true, stage: stage }
-            }));
+            // Show success message
+            leadLoading.style.display = 'none';
+            leadCardContainer.innerHTML = `
+                <div class="lead-card" style="border-left-color: #28a745;">
+                    <div class="lead-card-content">
+                        <p>Lead has been processed successfully!</p>
+                        <p>Click "Get New Lead" to get another lead.</p>
+                    </div>
+                </div>
+            `;
+            leadCardContainer.style.display = 'block';
             
         } catch (error) {
             console.error('Error processing lead:', error);
             alert(`Error processing lead: ${error.message}`);
             leadLoading.style.display = 'none';
             leadCardContainer.style.display = 'block';
-            
-            // Notify of failure
-            document.dispatchEvent(new CustomEvent('currentLeadProcessed', { 
-                detail: { success: false, error: error.message }
-            }));
+        } finally {
+            resetProcessingState();
         }
     }
     
-    // Add lead to No Response table
-    async function addToNoResponseTable(phone, agentCode) {
-        const today = new Date().toISOString().split('T')[0];
-        const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-        
-        try {
-            const response = await fetch(`https://nocodb.tsblive.in/api/v2/tables/${TABLE_IDS.noResponse}/records`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'xc-token': API_TOKEN
-                },
-                body: JSON.stringify({
-                    Phone: phone,
-                    Agent: agentCode,
-                    Date: today,
-                    Time: time
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Failed to add to No Response table: ${response.statusText}`);
-            }
-            
-            console.log('Successfully added to No Response table');
-            return true;
-        } catch (error) {
-            console.error('Error adding to No Response table:', error);
-            throw error;
-        }
-    }
-    
-    // Add lead to Not Interested table
-    async function addToNotInterestedTable(phone, agentCode, notes) {
-        const today = new Date().toISOString().split('T')[0];
-        const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-        
-        try {
-            const response = await fetch(`https://nocodb.tsblive.in/api/v2/tables/${TABLE_IDS.notInterested}/records`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'xc-token': API_TOKEN
-                },
-                body: JSON.stringify({
-                    Phone: phone,
-                    Agent: agentCode,
-                    Notes: notes,
-                    Date: today,
-                    Time: time
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`Failed to add to Not Interested table: ${response.statusText}`);
-            }
-            
-            console.log('Successfully added to Not Interested table');
-            return true;
-        } catch (error) {
-            console.error('Error adding to Not Interested table:', error);
-            throw error;
-        }
+    // Reset the processing state
+    function resetProcessingState() {
+        processingSubmission = false;
+        submitLeadButton.disabled = false;
+        submitLeadButton.textContent = 'Submit';
     }
     
     // Add lead to agent's table
@@ -1222,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Send data to n8n webhook
-    async function sendToWebhook(type, phone, agentCode, notes = '') {
+    async function sendToWebhook(type, phone, agentCode, source = '', notes = '') {
         const webhookUrl = WEBHOOKS[type];
         
         if (!webhookUrl) {
@@ -1239,6 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify({
                     phone: phone,
                     agent: agentCode,
+                    source: source,
                     notes: notes,
                     timestamp: new Date().toISOString()
                 })
@@ -1248,11 +1042,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(`Failed to send to webhook: ${response.statusText}`);
             }
             
+            console.log(`Successfully sent to ${type} webhook`);
             return true;
         } catch (error) {
             console.error(`Error sending to ${type} webhook:`, error);
-            // Don't throw here - we don't want to fail the whole process if webhook fails
-            return false;
+            throw error;
         }
     }
     
@@ -1267,148 +1061,94 @@ document.addEventListener('DOMContentLoaded', function() {
         callLaterDateContainer.style.display = 'none';
         trialDurationContainer.style.display = 'none';
         
-        // Update current lead reference and notify other components
+        // Clear current lead and localStorage
         currentLead = null;
-        document.dispatchEvent(new CustomEvent('currentLeadUpdated', { detail: null }));
+        localStorage.removeItem('currentLead');
     }
     
-    // Add event listener for current lead request from other components
-    document.addEventListener('requestCurrentLead', function() {
-        if (currentLead) {
-            document.dispatchEvent(new CustomEvent('currentLeadUpdated', { 
-                detail: { 
-                    Phone: currentLead.Phone,
-                    Source: currentLead.Source || '',
-                    Id: currentLead.Id
-                } 
-            }));
-        } else {
-            document.dispatchEvent(new CustomEvent('currentLeadUpdated', { detail: null }));
-        }
-    });
-    
-    // Event listener for resetLeadFormRequested
-    document.addEventListener('resetLeadFormRequested', function() {
-        resetLeadForm();
-    });
-    
-    // Initialize the component
-    document.addEventListener('agentLoggedIn', initLeadManagement);
-    
-    // Also listen for getNewLeadRequested event (from other components)
-    document.addEventListener('getNewLeadRequested', function() {
-        if (getLeadButton) {
-            getLeadButton.click();
-        }
-    });
-    
-    // Also check on DOM content loaded
+    // Initialize on DOM content loaded
     initLeadManagement();
 });
 </script>
-            
-</div>
-        
-        <div id="notMyLeadSection" class="crm-section">
-            <!-- Not My Lead Component will be inserted here -->
-            
-            <!-- Not My Lead Component -->
-<div class="crm-container not-my-lead-container">
-    <div class="crm-card">
-        <div class="crm-card-header">
-            <h2>Not My Lead</h2>
+
         </div>
-        <div class="crm-card-body">
-            <p class="section-description">Use this section when a lead belongs to another agent.</p>
-            
-            <div class="not-my-lead-form">
-                <!-- Only shown when a lead is active -->
-                <div id="noActiveLead" class="no-active-lead">
-                    <p>You need to get a lead first to transfer it.</p>
-                    <p>Go to the Lead Management section and click "Get New Lead".</p>
-                </div>
-                
-                <div id="transferLeadForm" class="transfer-lead-form" style="display: none;">
-                    <div class="form-group">
-                        <label for="activeLeadPhone">Lead Phone:</label>
-                        <input type="text" id="activeLeadPhone" class="form-control" readonly>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="transferToAgent">Transfer To Agent:</label>
-                        <select id="transferToAgent" class="form-control">
-                            <option value="" disabled selected>Select agent</option>
-                            <option value="Agent 1">Agent 1</option>
-                            <option value="Agent 2">Agent 2</option>
-                            <option value="Agent 3">Agent 3</option>
-                            <option value="Agent 4">Agent 4</option>
-                            <option value="Agent 5">Agent 5</option>
-                            <option value="Agent 6">Agent 6</option>
-                            <option value="Agent 7">Agent 7</option>
-                            <option value="Agent 8">Agent 8</option>
-                            <option value="Agent 9">Agent 9</option>
-                            <option value="Agent 10">Agent 10</option>
-                            <option value="Agent 11">Agent 11</option>
-                            <option value="Agent 12">Agent 12</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="transferLeadStage">Lead Stage:</label>
-                        <select id="transferLeadStage" class="form-control">
-                            <option value="" disabled selected>Select lead stage</option>
-                            <option value="Transfer">Transfer</option>
-                            <option value="App Done">App Done</option>
-                            <option value="Trial Enrolled">Trial Enrolled</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="transferNotes">Notes:</label>
-                        <textarea id="transferNotes" class="form-control" rows="3" placeholder="Add notes about this transfer..."></textarea>
-                    </div>
-                    
-                    <button id="transferLeadButton" class="btn btn-primary btn-block">Transfer Lead</button>
-                </div>
-                
-                <div id="transferLoading" class="loading-indicator" style="display: none;">
-                    <div class="spinner"></div>
-                    <p>Processing transfer...</p>
-                </div>
-                
-                <div id="transferSuccess" class="success-message" style="display: none;">
-                    <div class="success-icon">✓</div>
-                    <p>Lead successfully transferred!</p>
-                    <button id="getNewLeadAfterTransfer" class="btn btn-primary">Get New Lead</button>
-                </div>
+        
+        <div class="section-divider"></div>
+        
+        <!-- Not My Lead Section - Only visible after login -->
+        <div id="notMyLeadSection" class="crm-section" style="display: none;">
+            <!-- Not My Lead Component will be inserted here -->
+
+<!-- Not My Lead Component -->
+<div class="card not-my-lead-container">
+    <div class="card-header">
+        <h2>Not My Lead</h2>
+    </div>
+    <div class="card-body">
+        <p class="section-description">Use this section when a lead belongs to another agent.</p>
+        
+        <div class="not-my-lead-form">
+            <div class="form-group">
+                <label for="transferPhone">Enter Lead Phone Number:</label>
+                <input type="tel" id="transferPhone" class="form-control" placeholder="Enter 10 digit phone number" pattern="[0-9]{10}" maxlength="10">
             </div>
+            
+            <div class="form-group">
+                <label for="transferToAgent">Transfer To Agent:</label>
+                <select id="transferToAgent" class="form-control">
+                    <option value="" disabled selected>Select agent</option>
+                    <option value="Agent 1">Agent 1</option>
+                    <option value="Agent 2">Agent 2</option>
+                    <option value="Agent 3">Agent 3</option>
+                    <option value="Agent 4">Agent 4</option>
+                    <option value="Agent 5">Agent 5</option>
+                    <option value="Agent 6">Agent 6</option>
+                    <option value="Agent 7">Agent 7</option>
+                    <option value="Agent 8">Agent 8</option>
+                    <option value="Agent 9">Agent 9</option>
+                    <option value="Agent 10">Agent 10</option>
+                    <option value="Agent 11">Agent 11</option>
+                    <option value="Agent 12">Agent 12</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="transferLeadStage">Lead Stage:</label>
+                <select id="transferLeadStage" class="form-control">
+                    <option value="" disabled selected>Select lead stage</option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="App Done">App Done</option>
+                    <option value="Trial Enrolled">Trial Enrolled</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="transferNotes">Notes:</label>
+                <textarea id="transferNotes" class="form-control" rows="3" placeholder="Add notes about this transfer..."></textarea>
+            </div>
+            
+            <button id="transferLeadButton" class="btn btn-primary btn-block">Transfer Lead</button>
+        </div>
+        
+        <div id="transferLoading" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing transfer...</p>
+        </div>
+        
+        <div id="transferSuccess" class="success-message" style="display: none;">
+            <div class="success-icon">✓</div>
+            <p>Lead successfully transferred!</p>
+            <button id="transferReset" class="btn btn-primary">Transfer Another Lead</button>
         </div>
     </div>
 </div>
 
 <style>
-/* Extending the existing styles */
-.not-my-lead-container {
-    max-width: 800px;
-    margin-top: 2rem;
-}
-
+/* Not My Lead specific styles */
 .section-description {
     margin-bottom: 1.5rem;
     color: var(--gray-color);
     font-size: 0.95rem;
-}
-
-.no-active-lead {
-    background-color: var(--light-gray);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.transfer-lead-form {
-    margin-top: 1rem;
 }
 
 .loading-indicator {
@@ -1436,10 +1176,6 @@ document.addEventListener('DOMContentLoaded', function() {
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
-
-#getNewLeadAfterTransfer {
-    margin-top: 1rem;
-}
 </style>
 
 <script>
@@ -1447,7 +1183,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // API Token
     const API_TOKEN = 'UqtPUnEsD3OQeHwlwb7IC4BFpCxG6AY3J4evDXSd';
     
-    // Table IDs (from your provided API calls)
+    // Table IDs
     const TABLE_IDS = {
         'main': 'mxrl7syu0qe3xu3',
         'Agent 1': 'mlxuttgldb0b1rv',
@@ -1465,44 +1201,57 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // DOM Elements
-    const noActiveLead = document.getElementById('noActiveLead');
-    const transferLeadForm = document.getElementById('transferLeadForm');
-    const activeLeadPhone = document.getElementById('activeLeadPhone');
+    const transferPhone = document.getElementById('transferPhone');
     const transferToAgent = document.getElementById('transferToAgent');
     const transferLeadStage = document.getElementById('transferLeadStage');
     const transferNotes = document.getElementById('transferNotes');
     const transferLeadButton = document.getElementById('transferLeadButton');
     const transferLoading = document.getElementById('transferLoading');
     const transferSuccess = document.getElementById('transferSuccess');
-    const getNewLeadAfterTransfer = document.getElementById('getNewLeadAfterTransfer');
+    const transferReset = document.getElementById('transferReset');
     
-    // Listen for current lead updates from lead management component
-    document.addEventListener('currentLeadUpdated', function(event) {
-        const lead = event.detail;
-        
-        if (lead && lead.Phone) {
-            // We have an active lead, show the transfer form
-            noActiveLead.style.display = 'none';
-            transferLeadForm.style.display = 'block';
-            activeLeadPhone.value = lead.Phone;
-        } else {
-            // No active lead, show the message
-            noActiveLead.style.display = 'block';
-            transferLeadForm.style.display = 'none';
-            activeLeadPhone.value = '';
+    // Check if there's a current lead from Lead Management
+    const savedLead = localStorage.getItem('currentLead');
+    if (savedLead) {
+        try {
+            const currentLead = JSON.parse(savedLead);
+            if (currentLead && currentLead.Phone) {
+                transferPhone.value = currentLead.Phone;
+            }
+        } catch (e) {
+            console.error('Error parsing saved lead:', e);
         }
-    });
+    }
+    
+    // Initialize the component
+    function initNotMyLead() {
+        // Check if agent is logged in
+        const agentCode = localStorage.getItem('agentCode');
+        
+        if (!agentCode) {
+            document.querySelector('.not-my-lead-container').style.display = 'none';
+            return;
+        }
+        
+        // Prevent agent from transferring to themselves
+        const options = transferToAgent.querySelectorAll('option');
+        options.forEach(option => {
+            if (option.value === agentCode) {
+                option.disabled = true;
+            }
+        });
+    }
     
     // Transfer lead button click
     transferLeadButton.addEventListener('click', function() {
         // Validate form
-        const phoneNumber = activeLeadPhone.value;
+        const phoneNumber = transferPhone.value;
         const targetAgent = transferToAgent.value;
         const leadStage = transferLeadStage.value;
         const notes = transferNotes.value;
         
-        if (!phoneNumber) {
-            alert('No active lead to transfer');
+        if (!phoneNumber || phoneNumber.length !== 10 || !/^\d+$/.test(phoneNumber)) {
+            alert('Please enter a valid 10 digit phone number');
             return;
         }
         
@@ -1520,13 +1269,9 @@ document.addEventListener('DOMContentLoaded', function() {
         transferLead(phoneNumber, targetAgent, leadStage, notes);
     });
     
-    // Get new lead after transfer
-    getNewLeadAfterTransfer.addEventListener('click', function() {
-        // Reset transfer form
+    // Reset transfer form button
+    transferReset.addEventListener('click', function() {
         resetTransferForm();
-        
-        // Trigger get new lead event (for lead management component)
-        document.dispatchEvent(new CustomEvent('getNewLeadRequested'));
     });
     
     // Transfer lead to another agent
@@ -1540,8 +1285,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Show loading
-        transferLeadForm.style.display = 'none';
+        document.querySelector('.not-my-lead-form').style.display = 'none';
         transferLoading.style.display = 'flex';
+        transferSuccess.style.display = 'none';
         
         try {
             // 1. Update all instances of this phone in the main table with the new agent
@@ -1550,12 +1296,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // 2. Add the lead to the target agent's table with the selected stage
             await addToAgentTable(phone, targetAgent, leadStage, notes);
             
+            // If this is the current lead in Lead Management, clear it
+            const savedLead = localStorage.getItem('currentLead');
+            if (savedLead) {
+                try {
+                    const currentLead = JSON.parse(savedLead);
+                    if (currentLead && currentLead.Phone === phone) {
+                        localStorage.removeItem('currentLead');
+                    }
+                } catch (e) {
+                    console.error('Error checking current lead:', e);
+                }
+            }
+            
             // Show success message
             transferLoading.style.display = 'none';
             transferSuccess.style.display = 'block';
-            
-            // Notify lead management component that current lead is no longer active
-            document.dispatchEvent(new CustomEvent('currentLeadUpdated', { detail: null }));
             
         } catch (error) {
             console.error('Error transferring lead:', error);
@@ -1563,7 +1319,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Hide loading and show form again
             transferLoading.style.display = 'none';
-            transferLeadForm.style.display = 'block';
+            document.querySelector('.not-my-lead-form').style.display = 'block';
         }
     }
     
@@ -1630,14 +1386,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const today = new Date().toISOString().split('T')[0];
         const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
         
-        // Get source from active lead if available
-        let source = 'Transfer from ' + localStorage.getItem('agentName');
-        
-        // Check if we can get the original lead's source
-        const currentLead = document.getElementById('activeLeadPhone').getAttribute('data-source');
-        if (currentLead) {
-            source += ' (Original: ' + currentLead + ')';
-        }
+        // Source for transfer
+        const source = 'Transfer from ' + localStorage.getItem('agentName');
         
         // Prepare data to add to agent's table
         const data = {
@@ -1672,170 +1422,145 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Reset transfer form
     function resetTransferForm() {
-        activeLeadPhone.value = '';
+        transferPhone.value = '';
         transferToAgent.value = '';
         transferLeadStage.value = '';
         transferNotes.value = '';
         transferSuccess.style.display = 'none';
-        noActiveLead.style.display = 'block';
+        document.querySelector('.not-my-lead-form').style.display = 'block';
     }
-    
-    // Initialize component
-    function initNotMyLead() {
-        // Check if agent is logged in
-        const agentCode = localStorage.getItem('agentCode');
-        
-        if (!agentCode) {
-            document.querySelector('.not-my-lead-container').style.display = 'none';
-            return;
-        }
-        
-        // Prevent agent from transferring to themselves
-        const options = transferToAgent.querySelectorAll('option');
-        options.forEach(option => {
-            if (option.value === agentCode) {
-                option.disabled = true;
-            }
-        });
-        
-        // Check for active lead from lead management
-        const event = new CustomEvent('requestCurrentLead');
-        document.dispatchEvent(event);
-    }
-    
-    // Add event listener for agent login
-    document.addEventListener('agentLoggedIn', initNotMyLead);
     
     // Initialize on DOM content loaded
     initNotMyLead();
 });
 </script>
-            
+
         </div>
         
-        <div id="myClientDetailsSection" class="crm-section">
+        <div class="section-divider"></div>
+        
+        <!-- My Client Details Section - Only visible after login -->
+        <div id="myClientDetailsSection" class="crm-section" style="display: none;">
             <!-- My Client Details Component will be inserted here -->
-            
+
             <!-- My Client Details Component -->
-<div class="crm-container my-client-details-container">
-    <div class="crm-card">
-        <div class="crm-card-header">
-            <h2>My Client Details</h2>
-        </div>
-        <div class="crm-card-body">
-            <p class="section-description">View and manage your client leads by date and stage.</p>
+<div class="card my-client-details-container">
+    <div class="card-header">
+        <h2>My Client Details</h2>
+    </div>
+    <div class="card-body">
+        <p class="section-description">View and manage your client leads by date and stage.</p>
+        
+        <div class="client-filter-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="clientFilterDate">Select Date:</label>
+                    <input type="date" id="clientFilterDate" class="form-control">
+                </div>
+                
+                <div class="form-group date-option">
+                    <input type="checkbox" id="clientFilterAll" class="form-check-input">
+                    <label for="clientFilterAll" class="form-check-label">All Dates</label>
+                </div>
+            </div>
             
-            <div class="client-filter-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="clientFilterDate">Select Date:</label>
-                        <input type="date" id="clientFilterDate" class="form-control">
+            <div class="form-group">
+                <label for="clientFilterStage">Select Lead Stage:</label>
+                <select id="clientFilterStage" class="form-control">
+                    <option value="" disabled selected>Select stage</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="App Pending">App Pending</option>
+                    <option value="App Done">App Done</option>
+                    <option value="Trial Enrolled">Trial Enrolled</option>
+                    <option value="Trial Attended">Trial Attended</option>
+                    <option value="Call Later">Call Later</option>
+                    <option value="Paid">Paid</option>
+                </select>
+            </div>
+            
+            <button id="clientFilterButton" class="btn btn-primary btn-block">View Clients</button>
+        </div>
+        
+        <div id="clientLoading" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p>Loading client details...</p>
+        </div>
+        
+        <div id="clientResults" class="client-results" style="display: none;">
+            <div class="results-header">
+                <h3 id="resultsTitle">Client Results</h3>
+                <span id="resultsCount" class="results-count">0 clients found</span>
+            </div>
+            
+            <div id="clientCardContainer" class="client-card-container">
+                <!-- Client cards will be inserted here dynamically -->
+            </div>
+            
+            <div id="noClientsFound" class="no-results" style="display: none;">
+                <p>No clients found matching your criteria.</p>
+            </div>
+        </div>
+        
+        <!-- Client Update Modal -->
+        <div id="updateClientModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Update Client</h3>
+                    <span id="closeModal" class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="client-info-display">
+                        <p><strong>Phone:</strong> <span id="updateClientPhone"></span></p>
+                        <p><strong>Current Stage:</strong> <span id="updateClientCurrentStage"></span></p>
                     </div>
                     
-                    <div class="form-group date-option">
-                        <input type="checkbox" id="clientFilterAll" class="form-check-input">
-                        <label for="clientFilterAll" class="form-check-label">All Dates</label>
+                    <div class="form-group">
+                        <label for="updateClientStage">New Lead Stage:</label>
+                        <select id="updateClientStage" class="form-control">
+                            <option value="" disabled selected>Select new stage</option>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="Transfer">Transfer</option>
+                            <option value="App Pending">App Pending</option>
+                            <option value="App Done">App Done</option>
+                            <option value="Trial Enrolled">Trial Enrolled</option>
+                            <option value="Trial Attended">Trial Attended</option>
+                            <option value="Call Later">Call Later</option>
+                            <option value="Paid">Paid</option>
+                        </select>
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="clientFilterStage">Select Lead Stage:</label>
-                    <select id="clientFilterStage" class="form-control">
-                        <option value="" disabled selected>Select stage</option>
-                        <option value="WhatsApp">WhatsApp</option>
-                        <option value="Transfer">Transfer</option>
-                        <option value="App Pending">App Pending</option>
-                        <option value="App Done">App Done</option>
-                        <option value="Trial Enrolled">Trial Enrolled</option>
-                        <option value="Trial Attended">Trial Attended</option>
-                        <option value="Call Later">Call Later</option>
-                        <option value="Paid">Paid</option>
-                    </select>
-                </div>
-                
-                <button id="clientFilterButton" class="btn btn-primary btn-block">View Clients</button>
-            </div>
-            
-            <div id="clientLoading" class="loading-indicator" style="display: none;">
-                <div class="spinner"></div>
-                <p>Loading client details...</p>
-            </div>
-            
-            <div id="clientResults" class="client-results" style="display: none;">
-                <div class="results-header">
-                    <h3 id="resultsTitle">Client Results</h3>
-                    <span id="resultsCount" class="results-count">0 clients found</span>
-                </div>
-                
-                <div id="clientCardContainer" class="client-card-container">
-                    <!-- Client cards will be inserted here dynamically -->
-                </div>
-                
-                <div id="noClientsFound" class="no-results" style="display: none;">
-                    <p>No clients found matching your criteria.</p>
-                </div>
-            </div>
-            
-            <!-- Client Update Modal -->
-            <div id="updateClientModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Update Client</h3>
-                        <span id="closeModal" class="close-modal">&times;</span>
-                    </div>
-                    <div class="modal-body">
-                        <div class="client-info-display">
-                            <p><strong>Phone:</strong> <span id="updateClientPhone"></span></p>
-                            <p><strong>Current Stage:</strong> <span id="updateClientCurrentStage"></span></p>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="updateClientStage">New Lead Stage:</label>
-                            <select id="updateClientStage" class="form-control">
-                                <option value="" disabled selected>Select new stage</option>
-                                <option value="WhatsApp">WhatsApp</option>
-                                <option value="Transfer">Transfer</option>
-                                <option value="App Pending">App Pending</option>
-                                <option value="App Done">App Done</option>
-                                <option value="Trial Enrolled">Trial Enrolled</option>
-                                <option value="Trial Attended">Trial Attended</option>
-                                <option value="Call Later">Call Later</option>
-                                <option value="Paid">Paid</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Trial Attended duration picker (hidden by default) -->
-                        <div id="updateTrialDurationContainer" class="form-group" style="display: none;">
-                            <label>Update Trial Duration:</label>
-                            <div class="duration-picker">
-                                <div class="duration-field">
-                                    <input type="number" id="updateDurationHours" class="form-control" min="0" max="23" value="0">
-                                    <label>Hours</label>
-                                </div>
-                                <div class="duration-field">
-                                    <input type="number" id="updateDurationMinutes" class="form-control" min="0" max="59" value="0">
-                                    <label>Minutes</label>
-                                </div>
-                                <div class="duration-field">
-                                    <input type="number" id="updateDurationSeconds" class="form-control" min="0" max="59" value="0">
-                                    <label>Seconds</label>
-                                </div>
+                    
+                    <!-- Trial Attended duration picker (hidden by default) -->
+                    <div id="updateTrialDurationContainer" class="form-group" style="display: none;">
+                        <label>Update Trial Duration:</label>
+                        <div class="duration-picker">
+                            <div class="duration-field">
+                                <input type="number" id="updateDurationHours" class="form-control" min="0" max="23" value="0">
+                                <label>Hours</label>
+                            </div>
+                            <div class="duration-field">
+                                <input type="number" id="updateDurationMinutes" class="form-control" min="0" max="59" value="0">
+                                <label>Minutes</label>
+                            </div>
+                            <div class="duration-field">
+                                <input type="number" id="updateDurationSeconds" class="form-control" min="0" max="59" value="0">
+                                <label>Seconds</label>
                             </div>
                         </div>
-                        
-                        <!-- Call Later date picker (hidden by default) -->
-                        <div id="updateCallLaterDateContainer" class="form-group" style="display: none;">
-                            <label for="updateCallLaterDate">Select New Call Back Date:</label>
-                            <input type="date" id="updateCallLaterDate" class="form-control">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="updateClientNotes">Update Notes:</label>
-                            <textarea id="updateClientNotes" class="form-control" rows="3" placeholder="Add or update notes..."></textarea>
-                        </div>
-                        
-                        <button id="updateClientButton" class="btn btn-primary btn-block">Update Client</button>
                     </div>
+                    
+                    <!-- Call Later date picker (hidden by default) -->
+                    <div id="updateCallLaterDateContainer" class="form-group" style="display: none;">
+                        <label for="updateCallLaterDate">Select New Call Back Date:</label>
+                        <input type="date" id="updateCallLaterDate" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="updateClientNotes">Update Notes:</label>
+                        <textarea id="updateClientNotes" class="form-control" rows="3" placeholder="Add or update notes..."></textarea>
+                    </div>
+                    
+                    <button id="updateClientButton" class="btn btn-primary btn-block">Update Client</button>
                 </div>
             </div>
         </div>
@@ -1843,12 +1568,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <style>
-/* Extending the existing styles */
-.my-client-details-container {
-    max-width: 800px;
-    margin-top: 2rem;
-}
-
+/* My Client Details specific styles */
 .form-row {
     display: flex;
     flex-wrap: wrap;
@@ -1881,14 +1601,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .client-filter-form {
     margin-bottom: 1.5rem;
-}
-
-.loading-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 0;
 }
 
 .results-header {
@@ -2082,7 +1794,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // API Token
     const API_TOKEN = 'UqtPUnEsD3OQeHwlwb7IC4BFpCxG6AY3J4evDXSd';
     
-    // Table IDs (from your provided API calls)
+    // Table IDs
     const TABLE_IDS = {
         'Agent 1': 'mlxuttgldb0b1rv',
         'Agent 2': 'mtqgkw2m8nyit45',
@@ -2096,22 +1808,6 @@ document.addEventListener('DOMContentLoaded', function() {
         'Agent 10': 'm72etgmfw9wkdj2',
         'Agent 11': 'mxpub6h9ypwkuku',
         'Agent 12': 'mdbped83zgd7w37'
-    };
-    
-    // View IDs
-    const VIEW_IDS = {
-        'Agent 1': 'vw6qsy9bhjjmp2uj',
-        'Agent 2': 'vwkbmwz2s27sfmaf',
-        'Agent 3': 'vwinp2ry3tsgs05v',
-        'Agent 4': 'vw1pfyodq1rue5qa',
-        'Agent 5': 'vwm662zy0mgsa6sz',
-        'Agent 6': 'vwg9aurks8a990r4',
-        'Agent 7': 'vwd1mneqgdxgxsyp',
-        'Agent 8': 'vwgnatfcc29lnwxe',
-        'Agent 9': 'vw7svg5hmw7ynq5t',
-        'Agent 10': 'vwy47pqclq52v8o0',
-        'Agent 11': 'vwfv3a57j5pe6d66',
-        'Agent 12': 'vw3n15cpn8oazt71'
     };
     
     // DOM Elements
@@ -2148,6 +1844,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize min date for date pickers
     clientFilterDate.min = "2023-01-01"; // Set a reasonable min date
     updateCallLaterDate.min = today;
+    
+    // Track current client for updates
+    let currentClientId = null;
     
     // Event Listeners
     
@@ -2209,16 +1908,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update client button click
     updateClientButton.addEventListener('click', function() {
+        if (!currentClientId) {
+            alert('No client selected for update');
+            return;
+        }
+        
         const phone = updateClientPhone.textContent;
         const newStage = updateClientStage.value;
         const notes = updateClientNotes.value;
         
-        // Check if new stage is selected
-        if (!newStage) {
-            if (!notes || notes.trim() === '') {
-                alert('Please select a new stage or add notes for update');
-                return;
-            }
+        // Check if any update is provided
+        if (!newStage && (!notes || notes.trim() === '')) {
+            alert('Please select a new stage or add notes for update');
+            return;
         }
         
         // Additional validation for specific stages
@@ -2228,7 +1930,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Process the update
-        updateClient(phone, newStage, notes);
+        updateClient(currentClientId, phone, newStage, notes);
     });
     
     // Fetch clients by stage and date
@@ -2330,19 +2032,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="client-card-content">
                     <p><span class="client-card-label">Date:</span> ${client.Date || 'N/A'}</p>
-                    <p><span class="client-card-label">Time:</span> ${client.Time || 'N/A'}</p>
                     <p><span class="client-card-label">Source:</span> ${client.Source || 'N/A'}</p>
                     ${client.Duration ? `<p><span class="client-card-label">Duration:</span> ${client.Duration}</p>` : ''}
                     <p><span class="client-card-label">Notes:</span> ${client.Notes || 'No notes'}</p>
                 </div>
                 <div class="client-card-actions">
-                    <a href="tel:${client.Phone}" class="btn btn-success btn-sm">
-                        <i class="fas fa-phone"></i> Call
-                    </a>
-                    <a href="https://wa.me/91${client.Phone}" class="btn btn-success btn-sm">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                    <button class="btn btn-primary btn-sm update-client-btn" 
+                    <a href="tel:${client.Phone}" class="btn btn-call">Call</a>
+                    <a href="https://wa.me/91${client.Phone}" class="btn btn-whatsapp">WhatsApp</a>
+                    <button class="btn btn-primary update-client-btn" 
                             data-phone="${client.Phone}"
                             data-stage="${client['Lead Stage'] || ''}"
                             data-notes="${client.Notes || ''}"
@@ -2392,8 +2089,8 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTrialDurationContainer.style.display = 'none';
         updateCallLaterDateContainer.style.display = 'none';
         
-        // Set data attribute for ID
-        updateClientButton.setAttribute('data-id', id);
+        // Set current client ID
+        currentClientId = id;
         
         // Parse duration if available
         if (duration) {
@@ -2410,7 +2107,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Update client
-    async function updateClient(phone, newStage, notes) {
+    async function updateClient(clientId, phone, newStage, notes) {
         const agentCode = localStorage.getItem('agentCode');
         
         if (!agentCode) {
@@ -2419,7 +2116,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const tableId = TABLE_IDS[agentCode];
-        const clientId = updateClientButton.getAttribute('data-id');
         
         if (!tableId || !clientId) {
             alert('Missing table ID or client ID');
@@ -2517,123 +2213,120 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!agentCode) {
             document.querySelector('.my-client-details-container').style.display = 'none';
-            return;
         }
     }
-    
-    // Add event listener for agent login
-    document.addEventListener('agentLoggedIn', initMyClientDetails);
     
     // Initialize on DOM content loaded
     initMyClientDetails();
 });
 </script>
-            
         </div>
         
-        <div id="checkIndividualLeadSection" class="crm-section">
+        <div class="section-divider"></div>
+        
+        <!-- Check Individual Lead Section - Only visible after login -->
+        <div id="checkIndividualLeadSection" class="crm-section" style="display: none;">
             <!-- Check Individual Lead Component will be inserted here -->
-            
+
+
             <!-- Check Individual Lead Component -->
-<div class="crm-container check-individual-lead-container">
-    <div class="crm-card">
-        <div class="crm-card-header">
-            <h2>Check Individual Lead</h2>
+<div class="card check-individual-lead-container">
+    <div class="card-header">
+        <h2>Check Individual Lead</h2>
+    </div>
+    <div class="card-body">
+        <p class="section-description">Search for a specific lead by phone number.</p>
+        
+        <div class="search-form">
+            <div class="form-group">
+                <label for="searchLeadPhone">Enter Phone Number:</label>
+                <div class="search-input-container">
+                    <input type="tel" id="searchLeadPhone" class="form-control" placeholder="Enter 10 digit phone number" pattern="[0-9]{10}" maxlength="10">
+                    <button id="searchLeadButton" class="btn btn-primary">Search</button>
+                </div>
+                <small class="form-text">Enter 10 digit phone number without country code</small>
+            </div>
         </div>
-        <div class="crm-card-body">
-            <p class="section-description">Search for a specific lead by phone number.</p>
+        
+        <div id="leadSearchLoading" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p>Searching for lead...</p>
+        </div>
+        
+        <div id="leadSearchResults" class="lead-search-results" style="display: none;">
+            <div class="results-header">
+                <h3 id="leadSearchTitle">Lead Results</h3>
+                <span id="leadSearchCount" class="results-count">0 records found</span>
+            </div>
             
-            <div class="search-form">
-                <div class="form-group">
-                    <label for="searchLeadPhone">Enter Phone Number:</label>
-                    <div class="search-input-container">
-                        <input type="tel" id="searchLeadPhone" class="form-control" placeholder="Enter 10 digit phone number" pattern="[0-9]{10}" maxlength="10">
-                        <button id="searchLeadButton" class="btn btn-primary">Search</button>
+            <div id="leadSearchCardContainer" class="lead-search-card-container">
+                <!-- Lead cards will be inserted here dynamically -->
+            </div>
+            
+            <div id="noLeadFound" class="no-results" style="display: none;">
+                <p>No lead found with this phone number in your records.</p>
+            </div>
+        </div>
+        
+        <!-- Update Lead Modal -->
+        <div id="updateLeadModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Update Lead</h3>
+                    <span id="closeLeadModal" class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="client-info-display">
+                        <p><strong>Phone:</strong> <span id="updateLeadPhone"></span></p>
+                        <p><strong>Current Stage:</strong> <span id="updateLeadCurrentStage"></span></p>
                     </div>
-                    <small class="form-text">Enter 10 digit phone number without country code</small>
-                </div>
-            </div>
-            
-            <div id="leadSearchLoading" class="loading-indicator" style="display: none;">
-                <div class="spinner"></div>
-                <p>Searching for lead...</p>
-            </div>
-            
-            <div id="leadSearchResults" class="lead-search-results" style="display: none;">
-                <div class="results-header">
-                    <h3 id="leadSearchTitle">Lead Results</h3>
-                    <span id="leadSearchCount" class="results-count">0 records found</span>
-                </div>
-                
-                <div id="leadSearchCardContainer" class="lead-search-card-container">
-                    <!-- Lead cards will be inserted here dynamically -->
-                </div>
-                
-                <div id="noLeadFound" class="no-results" style="display: none;">
-                    <p>No lead found with this phone number in your records.</p>
-                </div>
-            </div>
-            
-            <!-- Update Lead Modal (reusing the same structure as in My Client Details) -->
-            <div id="updateLeadModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Update Lead</h3>
-                        <span id="closeLeadModal" class="close-modal">&times;</span>
+                    
+                    <div class="form-group">
+                        <label for="updateLeadStage">New Lead Stage:</label>
+                        <select id="updateLeadStage" class="form-control">
+                            <option value="" disabled selected>Select new stage</option>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="Transfer">Transfer</option>
+                            <option value="App Pending">App Pending</option>
+                            <option value="App Done">App Done</option>
+                            <option value="Trial Enrolled">Trial Enrolled</option>
+                            <option value="Trial Attended">Trial Attended</option>
+                            <option value="Call Later">Call Later</option>
+                            <option value="Paid">Paid</option>
+                        </select>
                     </div>
-                    <div class="modal-body">
-                        <div class="client-info-display">
-                            <p><strong>Phone:</strong> <span id="updateLeadPhone"></span></p>
-                            <p><strong>Current Stage:</strong> <span id="updateLeadCurrentStage"></span></p>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="updateLeadStage">New Lead Stage:</label>
-                            <select id="updateLeadStage" class="form-control">
-                                <option value="" disabled selected>Select new stage</option>
-                                <option value="WhatsApp">WhatsApp</option>
-                                <option value="Transfer">Transfer</option>
-                                <option value="App Pending">App Pending</option>
-                                <option value="App Done">App Done</option>
-                                <option value="Trial Enrolled">Trial Enrolled</option>
-                                <option value="Trial Attended">Trial Attended</option>
-                                <option value="Call Later">Call Later</option>
-                                <option value="Paid">Paid</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Trial Attended duration picker (hidden by default) -->
-                        <div id="updateLeadDurationContainer" class="form-group" style="display: none;">
-                            <label>Update Trial Duration:</label>
-                            <div class="duration-picker">
-                                <div class="duration-field">
-                                    <input type="number" id="updateLeadDurationHours" class="form-control" min="0" max="23" value="0">
-                                    <label>Hours</label>
-                                </div>
-                                <div class="duration-field">
-                                    <input type="number" id="updateLeadDurationMinutes" class="form-control" min="0" max="59" value="0">
-                                    <label>Minutes</label>
-                                </div>
-                                <div class="duration-field">
-                                    <input type="number" id="updateLeadDurationSeconds" class="form-control" min="0" max="59" value="0">
-                                    <label>Seconds</label>
-                                </div>
+                    
+                    <!-- Trial Attended duration picker (hidden by default) -->
+                    <div id="updateLeadDurationContainer" class="form-group" style="display: none;">
+                        <label>Update Trial Duration:</label>
+                        <div class="duration-picker">
+                            <div class="duration-field">
+                                <input type="number" id="updateLeadDurationHours" class="form-control" min="0" max="23" value="0">
+                                <label>Hours</label>
+                            </div>
+                            <div class="duration-field">
+                                <input type="number" id="updateLeadDurationMinutes" class="form-control" min="0" max="59" value="0">
+                                <label>Minutes</label>
+                            </div>
+                            <div class="duration-field">
+                                <input type="number" id="updateLeadDurationSeconds" class="form-control" min="0" max="59" value="0">
+                                <label>Seconds</label>
                             </div>
                         </div>
-                        
-                        <!-- Call Later date picker (hidden by default) -->
-                        <div id="updateLeadCallLaterDateContainer" class="form-group" style="display: none;">
-                            <label for="updateLeadCallLaterDate">Select New Call Back Date:</label>
-                            <input type="date" id="updateLeadCallLaterDate" class="form-control">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="updateLeadNotes">Update Notes:</label>
-                            <textarea id="updateLeadNotes" class="form-control" rows="3" placeholder="Add or update notes..."></textarea>
-                        </div>
-                        
-                        <button id="updateLeadButton" class="btn btn-primary btn-block">Update Lead</button>
                     </div>
+                    
+                    <!-- Call Later date picker (hidden by default) -->
+                    <div id="updateLeadCallLaterDateContainer" class="form-group" style="display: none;">
+                        <label for="updateLeadCallLaterDate">Select New Call Back Date:</label>
+                        <input type="date" id="updateLeadCallLaterDate" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="updateLeadNotes">Update Notes:</label>
+                        <textarea id="updateLeadNotes" class="form-control" rows="3" placeholder="Add or update notes..."></textarea>
+                    </div>
+                    
+                    <button id="updateLeadButton" class="btn btn-primary btn-block">Update Lead</button>
                 </div>
             </div>
         </div>
@@ -2641,12 +2334,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <style>
-/* Extending the existing styles */
-.check-individual-lead-container {
-    max-width: 800px;
-    margin-top: 2rem;
-}
-
+/* Check Individual Lead specific styles */
 .search-input-container {
     display: flex;
     gap: 0.5rem;
@@ -2673,15 +2361,6 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow-y: auto;
 }
 
-.lead-search-card {
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-left: 4px solid var(--primary-color);
-}
-
 @media (max-width: 576px) {
     .search-input-container {
         flex-direction: column;
@@ -2698,7 +2377,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // API Token
     const API_TOKEN = 'UqtPUnEsD3OQeHwlwb7IC4BFpCxG6AY3J4evDXSd';
     
-    // Table IDs (from your provided API calls)
+    // Table IDs
     const TABLE_IDS = {
         'Agent 1': 'mlxuttgldb0b1rv',
         'Agent 2': 'mtqgkw2m8nyit45',
@@ -2742,6 +2421,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set today as min date for call later
     const today = new Date().toISOString().split('T')[0];
     updateLeadCallLaterDate.min = today;
+    
+    // Track current lead for updates
+    let currentLeadId = null;
+    
+    // Check for active lead phone from Lead Management
+    const savedLead = localStorage.getItem('currentLead');
+    if (savedLead) {
+        try {
+            const currentLead = JSON.parse(savedLead);
+            if (currentLead && currentLead.Phone) {
+                searchLeadPhone.value = currentLead.Phone;
+            }
+        } catch (e) {
+            console.error('Error parsing saved lead:', e);
+        }
+    }
     
     // Event Listeners
     
@@ -2798,16 +2493,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update lead button click
     updateLeadButton.addEventListener('click', function() {
+        if (!currentLeadId) {
+            alert('No lead selected for update');
+            return;
+        }
+        
         const phone = updateLeadPhone.textContent;
         const newStage = updateLeadStage.value;
         const notes = updateLeadNotes.value;
         
-        // Check if new stage is selected
-        if (!newStage) {
-            if (!notes || notes.trim() === '') {
-                alert('Please select a new stage or add notes for update');
-                return;
-            }
+        // Check if any update is provided
+        if (!newStage && (!notes || notes.trim() === '')) {
+            alert('Please select a new stage or add notes for update');
+            return;
         }
         
         // Additional validation for specific stages
@@ -2817,7 +2515,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Process the update
-        updateLead(phone, newStage, notes);
+        updateLead(currentLeadId, phone, newStage, notes);
     });
     
     // Search for lead by phone number
@@ -2844,7 +2542,7 @@ document.addEventListener('DOMContentLoaded', function() {
         noLeadFound.style.display = 'none';
         
         try {
-            // Construct the query URL
+            // Construct the query URL to search by phone
             const queryUrl = `https://nocodb.tsblive.in/api/v2/tables/${tableId}/records?where=(Phone,eq,${phone})&sort=-Id`;
             
             const response = await fetch(queryUrl, {
@@ -2895,7 +2593,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add each lead as a card
         leads.forEach(lead => {
             const card = document.createElement('div');
-            card.className = 'lead-search-card';
+            card.className = 'client-card';
             
             // Convert stage class (lowercase, replace spaces with hyphens)
             const stageClass = `stage-${(lead['Lead Stage'] || '').toLowerCase().replace(/\s+/g, '-')}`;
@@ -2907,19 +2605,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="client-card-content">
                     <p><span class="client-card-label">Date:</span> ${lead.Date || 'N/A'}</p>
-                    <p><span class="client-card-label">Time:</span> ${lead.Time || 'N/A'}</p>
                     <p><span class="client-card-label">Source:</span> ${lead.Source || 'N/A'}</p>
                     ${lead.Duration ? `<p><span class="client-card-label">Duration:</span> ${lead.Duration}</p>` : ''}
                     <p><span class="client-card-label">Notes:</span> ${lead.Notes || 'No notes'}</p>
                 </div>
                 <div class="client-card-actions">
-                    <a href="tel:${lead.Phone}" class="btn btn-success btn-sm">
-                        <i class="fas fa-phone"></i> Call
-                    </a>
-                    <a href="https://wa.me/91${lead.Phone}" class="btn btn-success btn-sm">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                    <button class="btn btn-primary btn-sm update-lead-btn" 
+                    <a href="tel:${lead.Phone}" class="btn btn-call">Call</a>
+                    <a href="https://wa.me/91${lead.Phone}" class="btn btn-whatsapp">WhatsApp</a>
+                    <button class="btn btn-primary update-lead-btn" 
                             data-phone="${lead.Phone}"
                             data-stage="${lead['Lead Stage'] || ''}"
                             data-notes="${lead.Notes || ''}"
@@ -2969,8 +2662,8 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLeadDurationContainer.style.display = 'none';
         updateLeadCallLaterDateContainer.style.display = 'none';
         
-        // Set data attribute for ID
-        updateLeadButton.setAttribute('data-id', id);
+        // Set current lead ID
+        currentLeadId = id;
         
         // Parse duration if available
         if (duration) {
@@ -2987,7 +2680,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Update lead
-    async function updateLead(phone, newStage, notes) {
+    async function updateLead(leadId, phone, newStage, notes) {
         const agentCode = localStorage.getItem('agentCode');
         
         if (!agentCode) {
@@ -2996,7 +2689,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const tableId = TABLE_IDS[agentCode];
-        const leadId = updateLeadButton.getAttribute('data-id');
         
         if (!tableId || !leadId) {
             alert('Missing table ID or lead ID');
@@ -3082,12 +2774,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!agentCode) {
             document.querySelector('.check-individual-lead-container').style.display = 'none';
-            return;
         }
     }
-    
-    // Add event listener for agent login
-    document.addEventListener('agentLoggedIn', initCheckIndividualLead);
     
     // Initialize on DOM content loaded
     initCheckIndividualLead();
@@ -3099,11 +2787,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // DOM Elements
-            const sectionTabs = document.getElementById('sectionTabs');
-            const tabButtons = document.querySelectorAll('.section-tab');
-            const sections = document.querySelectorAll('.crm-section');
             const agentDisplay = document.querySelector('.agent-display');
             const navLogoutBtn = document.getElementById('navLogoutBtn');
+            const allSections = document.querySelectorAll('.crm-section');
             
             // Check if agent is logged in
             function checkAgentLogin() {
@@ -3120,51 +2806,39 @@ document.addEventListener('DOMContentLoaded', function() {
                         el.textContent = agentName;
                     });
                     
-                    // Show agent display and tabs
+                    // Show agent display and logout button
                     agentDisplay.style.display = 'block';
-                    sectionTabs.style.display = 'flex';
+                    navLogoutBtn.style.display = 'block';
                     
-                    // Hide agent selection, show lead management
-                    document.getElementById('agentSelectionSection').classList.remove('active');
-                    document.getElementById('leadManagementSection').classList.add('active');
+                    // Hide agent selection, show all other sections
+                    document.getElementById('agentSelectionSection').style.display = 'none';
                     
-                    // Update active tab
-                    tabButtons.forEach(tab => {
-                        tab.classList.remove('active');
-                        if (tab.getAttribute('data-section') === 'lead-management') {
-                            tab.classList.add('active');
+                    const loggedInSections = [
+                        'leadManagementSection',
+                        'notMyLeadSection',
+                        'myClientDetailsSection',
+                        'checkIndividualLeadSection'
+                    ];
+                    
+                    loggedInSections.forEach(id => {
+                        const section = document.getElementById(id);
+                        if (section) {
+                            section.style.display = 'block';
                         }
                     });
                 } else {
-                    // Hide agent display and tabs
+                    // Hide agent display and logout button
                     agentDisplay.style.display = 'none';
-                    sectionTabs.style.display = 'none';
+                    navLogoutBtn.style.display = 'none';
                     
-                    // Show agent selection
-                    sections.forEach(section => section.classList.remove('active'));
-                    document.getElementById('agentSelectionSection').classList.add('active');
+                    // Show only agent selection section
+                    allSections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    document.getElementById('agentSelectionSection').style.display = 'block';
                 }
             }
-            
-            // Tab click handler
-            tabButtons.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const sectionId = this.getAttribute('data-section');
-                    
-                    // Update active tab
-                    tabButtons.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Hide all sections
-                    sections.forEach(section => section.classList.remove('active'));
-                    
-                    // Show selected section
-                    const selectedSection = document.getElementById(`${sectionId}Section`);
-                    if (selectedSection) {
-                        selectedSection.classList.add('active');
-                    }
-                });
-            });
             
             // Logout button click
             navLogoutBtn.addEventListener('click', function() {
@@ -3174,6 +2848,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     localStorage.removeItem('agentCode');
                     localStorage.removeItem('agentName');
                     localStorage.removeItem('agentNumber');
+                    localStorage.removeItem('currentLead');
                     window.location.reload();
                 }
             });
@@ -3186,23 +2861,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Check on page load
             checkAgentLogin();
             
-            // Communication between components
-            
-            // Get new lead requested from Not My Lead
-            document.addEventListener('getNewLeadRequested', function() {
-                // Switch to Lead Management
-                tabButtons.forEach(tab => {
-                    if (tab.getAttribute('data-section') === 'lead-management') {
-                        tab.click();
-                    }
-                });
-                
-                // Click the Get Lead button
-                const getLeadButton = document.getElementById('getLeadButton');
-                if (getLeadButton) {
-                    getLeadButton.click();
-                }
-            });
+            // Global logout function
+            window.logoutAgent = function() {
+                localStorage.removeItem('agentCode');
+                localStorage.removeItem('agentName');
+                localStorage.removeItem('agentNumber');
+                localStorage.removeItem('currentLead');
+                window.location.reload();
+            };
         });
     </script>
 </body>
